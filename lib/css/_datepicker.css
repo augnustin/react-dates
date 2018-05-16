@@ -121,6 +121,12 @@
 .SingleDatePicker_picker__directionRight {
   right: 0
 }
+.SingleDatePicker_picker__directionCenter {
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%)
+}
 .SingleDatePicker_picker__portal {
   background-color: rgba(0,0,0,.3);
   position: fixed;

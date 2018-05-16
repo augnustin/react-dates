@@ -18,6 +18,7 @@ export var INFO_POSITION_BEFORE = 'before';
 export var INFO_POSITION_AFTER = 'after';
 
 export var ANCHOR_LEFT = 'left';
+export var ANCHOR_CENTER = 'center';
 export var ANCHOR_RIGHT = 'right';
 
 export var OPEN_DOWN = 'down';

@@ -34,7 +34,7 @@ import DayPickerSingleDateController from './DayPickerSingleDateController';
 import OutsideClickHandler from './OutsideClickHandler';
 import CloseButton from './CloseButton';
 
-import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION, ANCHOR_LEFT, ANCHOR_RIGHT, OPEN_DOWN, OPEN_UP, DAY_SIZE, ICON_BEFORE_POSITION, INFO_POSITION_BOTTOM, FANG_HEIGHT_PX, DEFAULT_VERTICAL_SPACING } from '../constants';
+import { HORIZONTAL_ORIENTATION, VERTICAL_ORIENTATION, ANCHOR_LEFT, ANCHOR_CENTER, ANCHOR_RIGHT, OPEN_DOWN, OPEN_UP, DAY_SIZE, ICON_BEFORE_POSITION, INFO_POSITION_BOTTOM, FANG_HEIGHT_PX, DEFAULT_VERTICAL_SPACING } from '../constants';
 
 var propTypes = forbidExtraProps(_objectAssign({}, withStylesPropTypes, SingleDatePickerShape));
 
@@ -435,15 +435,12 @@ var SingleDatePicker = function (_React$Component) {
           return;
         }
 
-        var isAnchoredLeft = anchorDirection === ANCHOR_LEFT;
-
         if (!withPortal && !withFullScreenPortal) {
           var containerRect = this.dayPickerContainer.getBoundingClientRect();
           var currentOffset = dayPickerContainerStyles[anchorDirection] || 0;
-          var containerEdge = isAnchoredLeft ? containerRect[ANCHOR_RIGHT] : containerRect[ANCHOR_LEFT];
 
           this.setState({
-            dayPickerContainerStyles: _objectAssign({}, getResponsiveContainerStyles(anchorDirection, currentOffset, containerEdge, horizontalMargin), appendToBody && getDetachedContainerStyles(openDirection, anchorDirection, this.container))
+            dayPickerContainerStyles: _objectAssign({}, getResponsiveContainerStyles(anchorDirection, currentOffset, containerRect[anchorDirection], horizontalMargin), appendToBody && getDetachedContainerStyles(openDirection, anchorDirection, this.container))
           });
         }
       }
@@ -554,7 +551,7 @@ var SingleDatePicker = function (_React$Component) {
           'div',
           _extends({ // eslint-disable-line jsx-a11y/no-static-element-interactions
             ref: this.setDayPickerContainerRef
-          }, css(styles.SingleDatePicker_picker, anchorDirection === ANCHOR_LEFT && styles.SingleDatePicker_picker__directionLeft, anchorDirection === ANCHOR_RIGHT && styles.SingleDatePicker_picker__directionRight, openDirection === OPEN_DOWN && styles.SingleDatePicker_picker__openDown, openDirection === OPEN_UP && styles.SingleDatePicker_picker__openUp, !withAnyPortal && openDirection === OPEN_DOWN && {
+          }, css(styles.SingleDatePicker_picker, anchorDirection === ANCHOR_LEFT && styles.SingleDatePicker_picker__directionLeft, anchorDirection === ANCHOR_RIGHT && styles.SingleDatePicker_picker__directionRight, anchorDirection === ANCHOR_CENTER && styles.SingleDatePicker_picker__directionCenter, openDirection === OPEN_DOWN && styles.SingleDatePicker_picker__openDown, openDirection === OPEN_UP && styles.SingleDatePicker_picker__openUp, !withAnyPortal && openDirection === OPEN_DOWN && {
             top: inputHeight + verticalSpacing
           }, !withAnyPortal && openDirection === OPEN_UP && {
             bottom: inputHeight + verticalSpacing
@@ -741,6 +738,11 @@ export default withStyles(function (_ref) {
 
     SingleDatePicker_picker__directionRight: {
       right: 0
+    },
+
+    SingleDatePicker_picker__directionCenter: {
+      left: '50%',
+      transform: 'translateX(-50%)'
     },
 
     SingleDatePicker_picker__portal: {
